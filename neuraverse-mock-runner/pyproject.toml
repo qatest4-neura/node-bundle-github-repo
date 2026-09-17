@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "neuraverse-mock-runner"
+version = "0.1.0"
+description = "Mock application for testing Neuraverse nodes locally without external infrastructure"
+authors = ["Neura Dev <dev@neura-robotics.com>"]
+readme = "README.md"
+packages = [{include = "mock_runner", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = ">=0.115.0"
+uvicorn = ">=0.34.0"
+grpcio = ">=1.71.0"
+grpcio-tools = ">=1.71.0"
+grpcio-reflection = ">=1.71.0"
+grpc-interceptor = ">=0.15.4"
+protobuf = ">=3.17.0"
+pydantic = ">=1.8.0"
+pydantic-settings = ">=2.8.1"
+inject = ">=5.2.1"
+paho-mqtt = ">=1.6.1"
+structlog = ">=25.4.0"
+pyyaml = ">=6.0.2"
+requests = ">=2.32.3"
+python-jose = ">=3.4.0"
+python-dotenv = ">=1.1.0"
+numpy = ">=1.26.0"
+python-consul2 = "*"
+
+[tool.poetry.scripts]
+mock-runner-cli = "mock_runner.cli:main"
+mock-runner-web = "mock_runner.web.app:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
