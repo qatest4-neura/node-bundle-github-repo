@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neuraverse Mock Runner</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Header -->
+<header>
+    <div class="header-left">
+        <h1>Neuraverse Nodegraph Mock</h1>
+        <div class="header-divider" id="header-divider" style="display:none;"></div>
+        <span class="header-node-name" id="current-node"></span>
+    </div>
+    <div class="header-right">
+        <button class="btn btn-ghost" id="btn-theme" onclick="toggleDarkMode()" title="Toggle dark mode">
+            <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+        <span id="state-badge" class="state-badge state-NO_NODE">NO NODE</span>
+    </div>
+</header>
+
+<div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">Available Nodes</div>
+        <ul id="node-list" class="node-list"></ul>
+
+        <div id="config-section" class="config-card" style="display:none;">
+            <div class="config-card-header">
+                <h3>Configuration</h3>
+                <p id="config-desc">Key-value parameters</p>
+            </div>
+            <div class="config-card-body">
+                <div id="config-fields"></div>
+                <div id="legacy-config-buttons">
+                    <button class="btn btn-outline btn-sm" style="width:100%; margin-bottom:8px;" onclick="addConfigField()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Add Parameter
+                    </button>
+                </div>
+                <button class="btn btn-outline" style="width:100%; margin-bottom:8px;" onclick="initNode()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
+                    Init Node
+                </button>
+                <button class="btn btn-primary" style="width:100%;" onclick="configureNode()">Configure</button>
+            </div>
+        </div>
+    </aside>
+    <div class="sidebar-resize-handle" id="sidebar-resize-handle"></div>
+
+    <!-- Main Area -->
+    <main class="main-area">
+        <!-- Empty state (no node selected) -->
+        <div id="empty-state" class="empty-state">
+            <div>
+                <p>No Node Selected</p>
+                <p class="sub">Select a node from the sidebar to begin</p>
+            </div>
+        </div>
+
+        <!-- Active node content (hidden until node selected) -->
+        <div id="active-content" style="display:none;">
+
+            <!-- Action Bar -->
+            <div class="action-bar">
+                <button class="btn btn-success" id="btn-execute" onclick="executeNode()" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    Execute
+                </button>
+                <button class="btn btn-danger" id="btn-stop" onclick="stopNode()" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
+                    Stop
+                </button>
+                <button class="btn btn-outline" id="btn-clear" onclick="clearOutputs()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    Clear Outputs
+                </button>
+                <button class="btn btn-outline" id="btn-reload" onclick="reloadNodes()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                    Reload Code
+                </button>
+            </div>
+
+            <!-- Content Split -->
+            <div class="content-split">
+                <!-- Left: Input Ports + Outputs -->
+                <div class="content-left">
+                    <div class="panel-section flex-1" id="input-ports-panel">
+                        <h3>Input Ports</h3>
+                        <div id="inject-ports-container">
+                            <p style="font-size:14px; color:var(--muted-fg);">No input ports available</p>
+                        </div>
+                    </div>
+                    <div class="panel-section flex-1 border-top">
+                        <h3>Published Outputs</h3>
+                        <div id="outputs-container">
+                            <p style="font-size:14px; color:var(--muted-fg);">No outputs published yet</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Logs / Status (tabs) -->
+                <div class="content-right">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" onclick="switchTab('logs', this)">Node Logs</button>
+                        <button class="tab-btn" onclick="switchTab('status', this)">Status Log</button>
+                    </div>
+                    <div id="tab-logs" class="tab-content active">
+                        <div class="panel-section flex-1">
+                            <div id="node-logs">
+                                <p style="font-size:14px; color:var(--muted-fg);">No logs yet</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-status" class="tab-content">
+                        <div class="panel-section flex-1">
+                            <div id="status-log">
+                                <p style="font-size:14px; color:var(--muted-fg);">No state transitions yet</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
