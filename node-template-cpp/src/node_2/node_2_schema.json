@@ -1,0 +1,51 @@
+{
+  "id": "",
+  "name": "Node2",
+  "type": 1,
+  "description": "A minimal C++ node — starting point for your own implementation.",
+  "tags": ["example", "cpp"],
+  "inputs": {
+    "start": {
+      "rosType": "Start",
+      "edgeType": "NODE_EDGE_TYPE_TRIGGER"
+    },
+    "stop": {
+      "rosType": "Stop",
+      "edgeType": "NODE_EDGE_TYPE_TRIGGER"
+    }
+  },
+  "outputs": {
+    "Start": {
+      "rosType": "Start",
+      "edgeType": "NODE_EDGE_TYPE_TRIGGER"
+    },
+    "Stop": {
+      "rosType": "Stop",
+      "edgeType": "NODE_EDGE_TYPE_TRIGGER"
+    },
+    "Error": {
+      "rosType": "Error",
+      "edgeType": "NODE_EDGE_TYPE_TRIGGER"
+    }
+  },
+  "errorOutputs": {},
+  "dataFlowEntry": {},
+  "assetInstanceId": "",
+  "triggerFlowEntry": {},
+  "executionContext": {
+    "type": "EXECUTION_TARGET_TYPE_GRPC",
+    "target": "",
+    "className": "Node2"
+  },
+  "nodeBaseUrl": "",
+  "executionStatus": {
+    "state": "EXECUTION_STATE_IDLE",
+    "lastUpdate": "",
+    "statusMessage": ""
+  },
+  "dataFlowCommunicationType": "DATA_FLOW_COMMUNICATION_TYPE_ROS",
+  "configuration": {},
+  "assetInstanceConfigurationKeys": {},
+  "resourceVersion": 1,
+  "history": []
+}
