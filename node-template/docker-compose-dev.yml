@@ -1,0 +1,54 @@
+services:
+  neuraverse-node-template:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      network: host
+      args:
+        # Local builds (laptop, robot) use the SDK image you built next door; the Dockerfile's own
+        # default points at the shared ECR image so the cloud builder needs no arguments.
+        SDK_BASE_IMAGE: ${SDK_BASE_IMAGE:-neuraverse/neuraverse-node-sdk:latest}
+    environment:
+      - SERVICE_NAME=node-sdk-node-template
+      - SERVICE_TAG=0.8.0
+      - SERVICE_CONFIG=config/service_config.yaml
+      - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
+    volumes:
+      - ./src:/neuraverse-node/src
+      - ./config:/neuraverse-node/config
+    network_mode: host
+    stdin_open: true
+    tty: true
+
+  mock-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      network: host
+      args:
+        SDK_BASE_IMAGE: ${SDK_BASE_IMAGE:-neuraverse/neuraverse-node-sdk:latest}
+    volumes:
+      - ../neuraverse-mock-runner/src/mock_runner:/neuraverse-node/src/mock_runner
+      - ./src:/neuraverse-node/src/nodes:ro
+      - ./config:/neuraverse-node/config:ro
+    ports:
+      - "8599:8599"
+    environment:
+      - PYTHONPATH=/neuraverse-node/src
+    command: >
+      bash -lc "
+        source /opt/ros/humble/setup.bash &&
+        cd /neuraverse-node &&
+        poetry run python -m mock_runner.web.app --project /neuraverse-node
+      "
+
+  docs:
+    build:
+      context: ../docs
+      dockerfile: Dockerfile
+    ports:
+      - "8089:8089"
+    volumes:
+      - ../docs:/docs
+      - ./src:/src:ro
+    command: [ "mkdocs", "serve", "-a", "0.0.0.0:8089" ]
