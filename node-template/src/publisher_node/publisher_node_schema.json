@@ -1,0 +1,143 @@
+{
+  "id": "Template Nodes",
+  "name": "Publisher Node",
+  "type": 1,
+  "description": "Node with many data inputs and outputs",
+  "tags": [
+    "tag1",
+    "tag2"
+  ],
+  "dataFlowCommunicationType": 1,
+  "inputs": {
+    "Start": {
+      "rosType": "Start",
+      "type": 1,
+      "requestTarget": "",
+      "edgeType": 2,
+      "defaultValue": "default"
+    },
+    "Stop": {
+      "rosType": "Stop",
+      "type": 1,
+      "requestTarget": "",
+      "edgeType": 2,
+      "defaultValue": "default"
+    },
+
+    "text_input": {
+      "rosType": "std_msgs/String",
+      "edgeType": 1
+    },
+    "float32_input": {
+      "rosType": "std_msgs/Float32",
+      "edgeType": 1
+    },
+    "float64_input": {
+      "rosType": "std_msgs/Float64",
+      "edgeType": 1
+    },
+    "int32_input": {
+      "rosType": "std_msgs/Int32",
+      "edgeType": 1
+    },
+    "int64_input": {
+      "rosType": "std_msgs/Int64",
+      "edgeType": 1
+    },
+    "bool_input": {
+      "rosType": "std_msgs/Bool",
+      "edgeType": 1
+    },
+    "float_array_input": {
+      "rosType": "std_msgs/Float32MultiArray",
+      "edgeType": 1
+    },
+    "int_array_input": {
+      "rosType": "std_msgs/Int32MultiArray",
+      "edgeType": 1
+    },
+    "image_input": {
+      "rosType": "sensor_msgs/CompressedImage",
+      "edgeType": 1
+    },
+    "twist_input": {
+      "rosType": "geometry_msgs/Twist",
+      "edgeType": 1
+    }
+  },
+  "outputs": {
+    "Start": {
+      "rosType": "Start",
+      "type": 1,
+      "requestTarget": "",
+      "edgeType": 2,
+      "defaultValue": "default"
+    },
+    "Error": {
+      "rosType": "Error",
+      "type": 1,
+      "requestTarget": "",
+      "edgeType": 2,
+      "defaultValue": "default"
+    },
+
+    "text_output": {
+      "rosType": "std_msgs/String",
+      "edgeType": 1
+    },
+    "float32_output": {
+      "rosType": "std_msgs/Float32",
+      "edgeType": 1
+    },
+    "float64_output": {
+      "rosType": "std_msgs/Float64",
+      "edgeType": 1
+    },
+    "int32_output": {
+      "rosType": "std_msgs/Int32",
+      "edgeType": 1
+    },
+    "int64_output": {
+      "rosType": "std_msgs/Int64",
+      "edgeType": 1
+    },
+    "bool_output": {
+      "rosType": "std_msgs/Bool",
+      "edgeType": 1
+    },
+    "float_array_output": {
+      "rosType": "std_msgs/Float32MultiArray",
+      "edgeType": 1
+    },
+    "int_array_output": {
+      "rosType": "std_msgs/Int32MultiArray",
+      "edgeType": 1
+    },
+    "image_output": {
+      "rosType": "sensor_msgs/CompressedImage",
+      "edgeType": 1
+    },
+    "twist_output": {
+      "rosType": "geometry_msgs/Twist",
+      "edgeType": 1
+    }
+  },
+  "errorOutputs": {},
+  "assetInstanceId": "",
+  "executionContext": {
+    "type": 3,
+    "target": "",
+    "className": "PublisherNode"
+  },
+  "nodeBaseUrl": "",
+  "executionStatus": {
+    "state": 1,
+    "lastUpdate": "",
+    "statusMessage": "Executing Node 1"
+  },
+  "configuration": {
+    "test_config": "test_value"
+  },
+  "resourceVersion": 101,
+  "history": []
+}
