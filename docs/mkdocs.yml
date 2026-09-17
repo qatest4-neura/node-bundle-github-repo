@@ -1,0 +1,52 @@
+site_name: Neuraverse Node Template
+site_url: ""
+repo_url: ""
+edit_uri: ""
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: teal
+      accent: purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: teal
+      accent: purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - content.code.copy
+    - content.tabs.link
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+  - admonition
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+         python:
+            paths: [../node-template/src]
+
+docs_dir: src
+
+nav:
+  - Home: index.md
+  - Getting Started: getting_started.md
+  - Node Lifecycle: node_lifecycle.md
+  - API Reference: api_reference.md
+  - Compatible I/O Types: compatible_types.md
+  - Schema Reference: schema.md
