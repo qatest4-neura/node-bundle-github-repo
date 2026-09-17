@@ -1,0 +1,87 @@
+{
+  "id": "EOWRIAyz",
+  "name": "MoveJointNode_2",
+  "type": 1,
+  "description": "This is a move joint node. This enables the robot to do a motion in joint space. The previous node will provide the input to this node. Another possibility is to do motions to the points saved on the GUI. It can be single or multiple points. User can also provide a point to which a move joint motion can be done.",
+  "tags": ["Move", "Joint"],
+  "inputs": {
+    "start": {
+      "rosType": "Start",
+      "type": 1,
+      "requestTarget": "",
+      "defaultValue": "default",
+      "edgeType": 2
+    },
+    "stop": {
+      "rosType": "Stop",
+      "type": 1,
+      "requestTarget": "",
+      "defaultValue": "default",
+      "edgeType": 2
+    },
+    "target_pose": {
+      "rosType": "/geometry_msgs/msg/Pose",
+      "type": 1,
+      "requestTarget": "",
+      "defaultValue": "",
+      "edgeType": 1
+    },
+    "target_joint": {
+      "rosType": "/trajectory_msgs/msg/JointTrajectoryPoint",
+      "type": 1,
+      "requestTarget": "",
+      "defaultValue": "",
+      "edgeType": 1
+    },
+    "target_gui_point": {
+      "rosType": "/std_msgs/msg/String",
+      "type": 1,
+      "requestTarget": "",
+      "defaultValue": "",
+      "edgeType": 1
+    }
+  },
+  "outputs": {
+    "Start": {
+      "rosType": "Start",
+      "type": 1,
+      "requestTarget": "",
+      "defaultValue": "default",
+      "edgeType": 2
+    },
+    "Stop": {
+      "rosType": "Stop",
+      "type": 1,
+      "requestTarget": "",
+      "defaultValue": "default",
+      "edgeType": 2
+    },
+    "Error": {
+      "rosType": "Error",
+      "type": 1,
+      "requestTarget": "",
+      "defaultValue": "default",
+      "edgeType": 2
+    }
+  },
+  "assetInstanceId": "",
+  "executionContext": {
+    "type": 0,
+    "className": "MoveJointNode",
+    "target": "127.0.0.1:50058"
+  },
+  "configuration": {
+    "target_gui_point": "GP2",
+    "robot_ip_address": "54.93.181.157",
+    "robot_port": "50051",
+    "velocity": "100",
+    "acceleration": "100",
+    "node_deployment_host": "neuraverse-nodes-consul:8500",
+    "x": "733.1981357676353",
+    "y": "322.0146266527579",
+    "node_width": "244",
+    "height": "786"
+  },
+  "resourceVersion": 1,
+  "history": []
+}
