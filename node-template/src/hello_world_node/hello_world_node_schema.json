@@ -1,0 +1,59 @@
+{
+  "id": "Template Nodes",
+  "name": "HelloWorld Node",
+  "type": 1,
+  "description": "Node with only triggers",
+  "tags": [
+    "tag1",
+    "tag2"
+  ],
+  "dataFlowCommunicationType": 1,
+  "inputs": {
+    "Start": {
+      "rosType": "Start",
+      "type": 1,
+      "requestTarget": "",
+      "edgeType": 2,
+      "defaultValue": "default"
+    },
+    "Stop": {
+      "rosType": "Stop",
+      "type": 1,
+      "requestTarget": "",
+      "edgeType": 2,
+      "defaultValue": "default"
+    }
+  },
+  "outputs": {
+    "Start": {
+      "rosType": "Start",
+      "type": 1,
+      "requestTarget": "",
+      "edgeType": 2,
+      "defaultValue": "default"
+    },
+    "Error": {
+      "rosType": "Error",
+      "type": 1,
+      "requestTarget": "",
+      "edgeType": 2,
+      "defaultValue": "default"
+    }
+  },
+  "errorOutputs": {},
+  "assetInstanceId": "",
+  "executionContext": {
+    "type": 3,
+    "target": "",
+    "className": "HelloWorldNode"
+  },
+  "nodeBaseUrl": "",
+  "executionStatus": {
+    "state": 1,
+    "lastUpdate": "",
+    "statusMessage": "Executing Node 1"
+  },
+  "configuration": {},
+  "resourceVersion": 101,
+  "history": []
+}
