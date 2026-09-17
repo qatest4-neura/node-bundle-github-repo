@@ -1,0 +1,25 @@
+services:
+  neuraverse-node-template:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      network: host
+      args:
+        # Local builds (laptop, robot) use the SDK image you built next door; the Dockerfile's own
+        # default points at the shared ECR image so the cloud builder needs no arguments. Override with
+        # SDK_BASE_IMAGE=… docker compose build to test against a different base.
+        SDK_BASE_IMAGE: ${SDK_BASE_IMAGE:-neuraverse/neuraverse-node-sdk:latest}
+    environment:
+      - SERVICE_NAME=node-sdk-node-template
+      - SERVICE_TAG=0.8.0
+      - SERVICE_CONFIG=config/service_config.yaml
+      - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
+    network_mode: host
+    stdin_open: true
+    tty: true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 40s
+      retries: 3
