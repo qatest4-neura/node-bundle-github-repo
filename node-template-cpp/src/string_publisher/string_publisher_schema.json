@@ -1,0 +1,57 @@
+{
+  "id": "",
+  "name": "StringPublisher",
+  "type": 1,
+  "description": "Publishes a configurable text string on its output. Wire text_output to a downstream EchoNode's text_input.",
+  "tags": ["example", "cpp", "publisher"],
+  "inputs": {
+    "start": {
+      "rosType": "Start",
+      "edgeType": "NODE_EDGE_TYPE_TRIGGER"
+    },
+    "stop": {
+      "rosType": "Stop",
+      "edgeType": "NODE_EDGE_TYPE_TRIGGER"
+    }
+  },
+  "outputs": {
+    "Start": {
+      "rosType": "Start",
+      "edgeType": "NODE_EDGE_TYPE_TRIGGER"
+    },
+    "Stop": {
+      "rosType": "Stop",
+      "edgeType": "NODE_EDGE_TYPE_TRIGGER"
+    },
+    "Error": {
+      "rosType": "Error",
+      "edgeType": "NODE_EDGE_TYPE_TRIGGER"
+    },
+    "text_output": {
+      "rosType": "std_msgs/String",
+      "edgeType": "NODE_EDGE_TYPE_DATA"
+    }
+  },
+  "errorOutputs": {},
+  "dataFlowEntry": {},
+  "assetInstanceId": "",
+  "triggerFlowEntry": {},
+  "executionContext": {
+    "type": "EXECUTION_TARGET_TYPE_GRPC",
+    "target": "",
+    "className": "StringPublisher"
+  },
+  "nodeBaseUrl": "",
+  "executionStatus": {
+    "state": "EXECUTION_STATE_IDLE",
+    "lastUpdate": "",
+    "statusMessage": ""
+  },
+  "dataFlowCommunicationType": "DATA_FLOW_COMMUNICATION_TYPE_ROS",
+  "configuration": {
+    "text": "Hello from StringPublisher"
+  },
+  "assetInstanceConfigurationKeys": {},
+  "resourceVersion": 1,
+  "history": []
+}
