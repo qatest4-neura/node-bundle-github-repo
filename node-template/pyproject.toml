@@ -1,0 +1,48 @@
+[tool.poetry]
+name = "neuraverse-node-template"
+version = "0.0.1"
+description = "Template Nodes Implementation in Neuraverse"
+authors = ["Neura Dev <dev@neura-robotics.com>"]
+readme = "README.md"
+packages = [
+    {include = "hello_world_node", from = "src"},
+    {include = "publisher_node", from = "src"},
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.28"
+
+lib-python-neuraverse-node-sdk = {path = "wheels/lib_python_neuraverse_node_sdk-2.23.0-py3-none-any.whl"}
+neuraverse_entities_apis_messages = {path = "wheels/neuraverse_entities_apis_messages-2.23.0-py3-none-any.whl"}
+lib-python-neuraverse-common = {path = "wheels/lib_python_neuraverse_common-2.6.0-py3-none-any.whl"}
+lib-python-neuraverse-service-http = {path = "wheels/lib_python_neuraverse_service_http-2.2.0-py3-none-any.whl"}
+lib-python-neuraverse-service-grpc = {path = "wheels/lib_python_neuraverse_service_grpc-2.2.0-py3-none-any.whl"}
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^4.3.0"
+
+[tool.poetry.scripts]
+post-install = "scripts.post_install:main"
+
+
+[tool.basedpyright]
+reportMissingTypeStubs = false
+reportUnknownParameterType = false
+reportUnknownVariableType = false
+reportUnknownMemberType = false
+venvPath = "/root/.cache/pypoetry/virtualenvs"
+venv = "neuraverse-node-template-0Tz0coV8-py3.10"
+extraPaths = ["/opt/ros/humble/local/lib/python3.10/dist-packages"]
+
+[tool.black]
+line-length = 100
+target-version = ['py310']
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
