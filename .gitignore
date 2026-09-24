@@ -1,0 +1,28 @@
+# we do not commit Virtual Environment
+.venv/
+
+# we do not commit Dist
+dist/
+.env
+poetry.lock
+# we do not commit local IDE stuff
+#.vscode/
+.idea/
+
+# also no caches
+*__pycache__*
+.pytest_cache
+
+# npm stuff
+node_modules/
+.npmrc
+
+logs/
+.python-version
+
+# deb stuff
+# *.deb
+
+neuraverse-entities/
+neuraverse-kreya-dev/
+python-libraries/
