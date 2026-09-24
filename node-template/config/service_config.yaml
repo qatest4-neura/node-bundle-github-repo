@@ -1,0 +1,35 @@
+grpc:
+  address: "127.0.0.1"
+  port: 50091
+http:
+  address: "127.0.0.1"
+  port: 8052
+mqtt:
+  broker_host: "localhost"
+  broker_port: 1883
+  client_id: "neuraverse_YOUR_NODE_NAME_node"
+  keep_alive: 60
+
+registry_config:
+  registry_endpoint: "127.0.0.1:8500"
+
+container_name: "YOUR_NODE_NAME_container"
+
+metrics:
+  is_enabled: true
+  http_port: 9052
+  default_sliding_timewindow_seconds: 60
+
+jwt:
+  auth_type: "Bearer"
+  algorithm: "RS256"
+  # Identity provider of the neuraverse environment this workspace belongs to, filled in when the
+  # workspace was created.
+  domain: "account.qa.neuraverse.com"
+  applications:
+    spa:
+      audience: "tf-neuraverse-infra-auth-api"
+    auth0_mgmt:
+      audience: "https://neuraverse-dev.eu.auth0.com/api/v2/"
+    m2m_default:
+      audience: "tf-neuraverse-infra-auth-api"
