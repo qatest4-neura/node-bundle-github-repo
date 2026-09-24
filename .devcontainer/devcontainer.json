@@ -1,0 +1,20 @@
+{
+  "name": "neuraverse-node-template-dev",
+  "dockerComposeFile": [
+    "../node-template/docker-compose-dev.yml"
+  ],
+  "service": "neuraverse-node-template",
+  "workspaceFolder": "/neuraverse-node",
+  "remoteUser": "root",
+  "postCreateCommand": "grep -q 'umask 0000' /root/.bashrc || echo 'umask 0000' >> /root/.bashrc",
+  "shutdownAction": "stopCompose",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  }
+}
