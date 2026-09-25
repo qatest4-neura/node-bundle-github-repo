@@ -1,0 +1,116 @@
+variables:
+  DOCKER_HOST: unix:///var/run/docker.sock
+
+stages:
+  - test
+  - bundle
+
+
+check-sdk-pins:
+  stage: test
+  image: docker:cli
+  tags:
+    - neuraverse
+  script:
+    - sh scripts/check-sdk-pins.sh
+
+test-devkit:
+  stage: test
+  image: docker:cli
+  tags:
+    - neuraverse
+  before_script:
+    - apk add --no-cache curl jq
+    - DOCKER_REGISTRY_USER_JSON=$(curl -s "https://gitlab.neura-robotics.com/api/v4/user?private_token=$GITLAB_TOKEN")
+    - DOCKER_REGISTRY_USER=$(echo "$DOCKER_REGISTRY_USER_JSON" | jq -r '.username')
+    - DOCKER_REGISTRY_PASS=$GITLAB_TOKEN
+    - echo $DOCKER_REGISTRY_USER_JSON
+    - echo $DOCKER_REGISTRY_USER
+    - docker login -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASS $CI_REGISTRY
+  script:
+    - SDK_PIN=$(tr -d '[:space:]' < SDK_VERSION)
+    - cd node-template
+    - docker compose down
+    - docker compose -f docker-compose-mock.yml down
+    - docker compose up -d --build neuraverse-node
+    - docker compose exec -T neuraverse-node poetry run pip check
+    - |
+      docker compose exec -T neuraverse-node poetry run python - "$SDK_PIN" <<'PY'
+      import sys
+      from importlib.metadata import version
+      actual = version("lib-python-neuraverse-node-sdk")
+      print(f"Installed SDK: {actual}")
+      print(f"Installed entities: {version('neuraverse-entities-apis-messages')}")
+      assert actual == sys.argv[1], (actual, sys.argv[1])
+      PY
+    - docker compose -f docker-compose-mock.yml up -d --wait --wait-timeout 120
+    - docker compose down
+    - docker compose -f docker-compose-mock.yml down
+
+bundle-devkit:
+  stage: bundle
+  image: docker:cli
+  tags:
+    - neuraverse
+  variables:
+    MOCK_NODEGRAPH_REGISTRY: $CI_REGISTRY/neuraverse/node-studio/mock-nodegraph
+    # The Mock Runner images mock-nodegraph publishes for this SDK line; kept in step with
+    # SDK_VERSION by scripts/bump-sdk.sh and asserted by scripts/check-sdk-pins.sh.
+    MOCK_IMAGE_TAG: sdk-2.41.0
+    NODE_SDK_IMAGE: registry.gitlab.neura-robotics.com/neuraverse/neuraverse-node-sdk:v2.41.0
+  before_script:
+    - apk add --no-cache git curl jq
+    - DOCKER_REGISTRY_USER_JSON=$(curl -s "https://gitlab.neura-robotics.com/api/v4/user?private_token=$GITLAB_TOKEN")
+    - DOCKER_REGISTRY_USER=$(echo "$DOCKER_REGISTRY_USER_JSON" | jq -r '.username')
+    - DOCKER_REGISTRY_PASS=$GITLAB_TOKEN
+    - echo $DOCKER_REGISTRY_USER_JSON
+    - echo $DOCKER_REGISTRY_USER
+    - docker login -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASS $CI_REGISTRY
+  script:
+    - docker pull $MOCK_NODEGRAPH_REGISTRY/mock-backend:$MOCK_IMAGE_TAG
+    - docker pull $MOCK_NODEGRAPH_REGISTRY/mock-frontend:$MOCK_IMAGE_TAG
+    - docker pull $MOCK_NODEGRAPH_REGISTRY/docs:$MOCK_IMAGE_TAG
+    - docker pull registry.gitlab.neura-robotics.com/neuraverse/neuraverse-node-sdk:v2.41.0
+    - >-
+      docker save
+      $MOCK_NODEGRAPH_REGISTRY/mock-backend:$MOCK_IMAGE_TAG
+      $MOCK_NODEGRAPH_REGISTRY/mock-frontend:$MOCK_IMAGE_TAG
+      $MOCK_NODEGRAPH_REGISTRY/docs:$MOCK_IMAGE_TAG
+      $NODE_SDK_IMAGE
+      -o nodegraph-devkit.tar
+    - |
+      printf 'SDK_VERSION=%s\nSOURCE_COMMIT=%s\n' "$(cat SDK_VERSION)" "$CI_COMMIT_SHA" > DEVKIT_MANIFEST.txt
+      for image in \
+        "$MOCK_NODEGRAPH_REGISTRY/mock-backend:$MOCK_IMAGE_TAG" \
+        "$MOCK_NODEGRAPH_REGISTRY/mock-frontend:$MOCK_IMAGE_TAG" \
+        "$MOCK_NODEGRAPH_REGISTRY/docs:$MOCK_IMAGE_TAG" \
+        "$NODE_SDK_IMAGE"; do
+        docker image inspect --format '{{json .RepoDigests}} {{.Os}}/{{.Architecture}}' "$image" >> DEVKIT_MANIFEST.txt
+      done
+      cat node-template/wheels/SHA256SUMS >> DEVKIT_MANIFEST.txt
+    - rm -rf node-template/.git
+    - cd node-template
+    - git config --global user.email "dev@neura-robotics.com"
+    - git config --global user.name "Neura Dev"
+    - git init -b main && git add . && git commit -m "Initial commit"
+  artifacts:
+    name: nodegraph-devkit
+    paths:
+      - nodegraph-devkit.tar
+      - DEVKIT_MANIFEST.txt
+      - node-template/
+    expire_in: 1 week
+
+# On a merge to main that touches node-template/, notify workspace-service so it can refresh the
+# node workspace seed template from this repo. Runs in the bundle stage, so it only fires after the
+# test stage passes. workspace-service pulls node-template/, applies its per-environment config, and
+# seeds it into each environment's bucket; that whole downstream is owned on the workspace-service side.
+trigger-workspace-sync:
+  stage: bundle
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - node-template/**/*
+  trigger:
+    project: neuraverse/neuraverse-workspace-service
+    branch: main

@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "neuraverse-node-__YOUR_NODE_CONTAINER_NAME__"
+version = "0.0.1"
+description = ""
+authors = ["Neura Dev <dev@neura-robotics.com>"]
+packages = [
+    {include = "float_monitor_node", from = "src"},
+    {include = "float_publisher_node", from = "src"},
+    {include = "hello_world_node", from = "src"},
+    {include = "republisher_node", from = "src"},
+]
+
+[tool.poetry.dependencies]
+neuraverse_entities_apis_messages = {path = "wheels/neuraverse_entities_apis_messages-2.38.0-py3-none-any.whl"}
+lib-python-neuraverse-node-sdk = {path = "wheels/lib_python_neuraverse_node_sdk-2.41.0-py3-none-any.whl"}
+lib-python-neuraverse-common = {path = "wheels/lib_python_neuraverse_common-2.9.0-py3-none-any.whl"}
+lib-python-neuraverse-service-http = {path = "wheels/lib_python_neuraverse_service_http-2.3.0-py3-none-any.whl"}
+lib-python-neuraverse-service-grpc = {path = "wheels/lib_python_neuraverse_service_grpc-2.6.0-py3-none-any.whl"}
+
+python = "^3.10"
+requests = "^2.28"
+pillow = "^12.3.0"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^4.3.0"
+
+[tool.poetry.scripts]
+post-install = "scripts.post_install:main"
+
+[tool.black]
+line-length = 100
+target-version = ['py310']
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

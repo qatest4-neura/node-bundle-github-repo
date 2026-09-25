@@ -1,0 +1,33 @@
+{
+  "id": "Template Nodes",
+  "name": "HelloWorld Node",
+  "type": 1,
+  "description": "Node with only triggers",
+  "tags": [],
+  "dataFlowCommunicationType": 1,
+  "inputs": {
+    "Start": {
+      "rosType": "Start",
+      "edgeType": 2
+    },
+    "Stop": {
+      "rosType": "Stop",
+      "edgeType": 2
+    }
+  },
+  "outputs": {
+    "Start": {
+      "rosType": "Start",
+      "edgeType": 2
+    },
+    "Error": {
+      "rosType": "Error",
+      "edgeType": 2
+    }
+  },
+  "executionContext": {
+    "type": 3,
+    "target": "",
+    "className": "HelloWorldNode"
+  }
+}
