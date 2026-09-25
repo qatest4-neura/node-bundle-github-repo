@@ -1,0 +1,33 @@
+name: mock-nodegraph
+
+services:
+  mock-backend:
+    image: registry.gitlab.neura-robotics.com/neuraverse/node-studio/mock-nodegraph/mock-backend:sdk-2.41.0
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./src:/neuraverse-node/src
+      - ./pyproject.toml:/neuraverse-node/pyproject.toml:ro
+      - ./wheels:/neuraverse-node/wheels:ro
+    environment:
+      - SRC_DIRPATH=/neuraverse-node/src
+    command: >
+      bash -c "
+        cd /app && pip install --break-system-packages . &&
+        cd /neuraverse-node && pip install --break-system-packages . &&
+        exec python3 /app/src/mock_backend/backend.py
+      "
+
+  mock-frontend:
+    image: registry.gitlab.neura-robotics.com/neuraverse/node-studio/mock-nodegraph/mock-frontend:sdk-2.41.0
+
+    environment:
+      - FRONTEND_PORT=${FRONTEND_PORT:-3000}
+    ports:
+      - ${FRONTEND_PORT:-3000}:${FRONTEND_PORT:-3000}
+
+  docs:
+    image: registry.gitlab.neura-robotics.com/neuraverse/node-studio/mock-nodegraph/docs:sdk-2.41.0
+
+    ports:
+      - "3001:3001"

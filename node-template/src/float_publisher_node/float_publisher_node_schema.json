@@ -1,0 +1,49 @@
+{
+  "id": "Template Nodes",
+  "name": "FloatPublisherNode",
+  "type": 1,
+  "description": "Publishes random Float32 and Float64 values between 0 and 10",
+  "tags": [],
+  "dataFlowCommunicationType": 1,
+  "inputs": {
+    "Start": {
+      "rosType": "Start",
+      "edgeType": 2
+    },
+    "Stop": {
+      "rosType": "Stop",
+      "edgeType": 2
+    }
+  },
+  "outputs": {
+    "Start": {
+      "rosType": "Start",
+      "edgeType": 2
+    },
+    "Error": {
+      "rosType": "Error",
+      "edgeType": 2
+    },
+    "float32_output": {
+      "rosType": "std_msgs/msg/Float32",
+      "edgeType": 1
+    },
+    "float64_output": {
+      "rosType": "std_msgs/msg/Float64",
+      "edgeType": 1
+    },
+    "large_float_output": {
+      "rosType": "std_msgs/msg/Float64",
+      "edgeType": 1
+    },
+    "image_output": {
+      "rosType": "sensor_msgs/msg/CompressedImage",
+      "edgeType": 1
+    }
+  },
+  "executionContext": {
+    "type": 3,
+    "target": "",
+    "className": "FloatPublisherNode"
+  }
+}
