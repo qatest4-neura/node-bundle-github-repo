@@ -1,0 +1,12 @@
+include:
+  - project: "neuraverse/neuraverse-pipelines"
+    file: "/SAST_TAG_BUILDKIT_UPDATE_MANIFEST.gitlab-ci.yml"
+  
+# Global variables
+variables:
+  APPLICATION_NAME: neuraverse-node-__YOUR_NODE_CONTAINER_NAME__
+  APPLICATION_PORT: 8500
+  EXTRA_DOCKER_BUILD_ARGS: "--opt build-arg:CI_JOB_TOKEN=$CI_JOB_TOKEN --secret id=CI_JOB_TOKEN,env=CI_JOB_TOKEN"
+  GITLAB_DOMAIN: "gitlab.hrg.systems"
+  IMAGE_FILE_PATH: "gateway/apps/neuraverse-node-__YOUR_NODE_CONTAINER_NAME__/values.yaml"
+  YQ_PATH: ".deployment.image.tag"
