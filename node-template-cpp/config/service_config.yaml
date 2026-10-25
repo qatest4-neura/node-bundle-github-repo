@@ -1,0 +1,25 @@
+grpc:
+  address: "0.0.0.0"
+  port: 50081
+http:
+  address: "0.0.0.0"
+  port: 8081
+jwt:
+  auth_type: "Bearer"
+  algorithm: "RS256"
+  admin_role:
+    - "admin"
+  user_role:
+    - "test-group-a"
+    - "test-group-b"
+  audience: tf-neuraverse-infra-auth-api
+mqtt:
+  broker_host: "localhost"
+  broker_port: 1883
+  client_id: "neuraverse_YOUR_NODE_NAME_node"
+  keep_alive: 60
+
+registry_config:
+  registry_endpoint: "127.0.0.1:8500"
+
+container_name: "YOUR_NODE_NAME_container"
