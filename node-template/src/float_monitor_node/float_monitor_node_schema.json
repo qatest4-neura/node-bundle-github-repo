@@ -1,0 +1,45 @@
+{
+  "id": "Template Nodes",
+  "name": "FloatMonitorNode",
+  "type": 1,
+  "description": "Reads Float32 and Float64 inputs and logs their values",
+  "tags": [],
+  "dataFlowCommunicationType": 1,
+  "inputs": {
+    "Start": {
+      "rosType": "Start",
+      "edgeType": 2
+    },
+    "Stop": {
+      "rosType": "Stop",
+      "edgeType": 2
+    },
+    "float32_input": {
+      "rosType": "std_msgs/msg/Float32",
+      "edgeType": 1
+    },
+    "float64_input": {
+      "rosType": "std_msgs/msg/Float64",
+      "edgeType": 1
+    },
+    "image_input": {
+      "rosType": "sensor_msgs/msg/Image",
+      "edgeType": 1
+    }
+  },
+  "outputs": {
+    "Start": {
+      "rosType": "Start",
+      "edgeType": 2
+    },
+    "Error": {
+      "rosType": "Error",
+      "edgeType": 2
+    }
+  },
+  "executionContext": {
+    "type": 3,
+    "target": "",
+    "className": "FloatMonitorNode"
+  }
+}
