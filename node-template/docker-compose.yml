@@ -1,0 +1,26 @@
+services:
+  neuraverse-node:
+#    image: neuraverse-node-__YOUR_NODE_CONTAINER_NAME__
+    build:
+      context: .
+      dockerfile: Dockerfile
+      network: host
+      args:
+        BASE_IMAGE: registry.gitlab.neura-robotics.com/neuraverse/neuraverse-node-sdk:v2.41.0
+    environment:
+      - SERVICE_NAME
+      - SERVICE_TAG
+      - SERVICE_CONFIG
+      - ENVVAR_LOG_CFG_PATH
+      - ROS_DOMAIN_ID
+      - AUTH_ISSUER
+      - AUTH_JWKS_URL
+    network_mode: host
+    stdin_open: true
+    tty: true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 40s
+      retries: 3
