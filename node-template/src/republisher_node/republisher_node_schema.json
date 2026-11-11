@@ -1,0 +1,116 @@
+{
+  "id": "Template Nodes",
+  "name": "Republisher Node",
+  "type": 1,
+  "description": "Node that re-publishes its inputs",
+  "tags": [
+    "tag1",
+    "tag2"
+  ],
+  "dataFlowCommunicationType": 1,
+  "inputs": {
+    "Start": {
+      "rosType": "Start",
+      "edgeType": 2
+    },
+    "Stop": {
+      "rosType": "Stop",
+      "edgeType": 2
+    },
+    "text_input": {
+      "rosType": "std_msgs/msg/String",
+      "edgeType": 1
+    },
+    "float32_input": {
+      "rosType": "std_msgs/msg/Float32",
+      "edgeType": 1
+    },
+    "float64_input": {
+      "rosType": "std_msgs/msg/Float64",
+      "edgeType": 1
+    },
+    "int32_input": {
+      "rosType": "std_msgs/msg/Int32",
+      "edgeType": 1
+    },
+    "int64_input": {
+      "rosType": "std_msgs/msg/Int64",
+      "edgeType": 1
+    },
+    "bool_input": {
+      "rosType": "std_msgs/msg/Bool",
+      "edgeType": 1
+    },
+    "float_array_input": {
+      "rosType": "std_msgs/msg/Float32MultiArray",
+      "edgeType": 1
+    },
+    "int_array_input": {
+      "rosType": "std_msgs/msg/Int32MultiArray",
+      "edgeType": 1
+    },
+    "image_input": {
+      "rosType": "sensor_msgs/msg/CompressedImage",
+      "edgeType": 1
+    },
+    "twist_input": {
+      "rosType": "geometry_msgs/msg/Twist",
+      "edgeType": 1
+    }
+  },
+  "outputs": {
+    "Start": {
+      "rosType": "Start",
+      "edgeType": 2
+    },
+    "Error": {
+      "rosType": "Error",
+      "edgeType": 2
+    },
+    "text_output": {
+      "rosType": "std_msgs/msg/String",
+      "edgeType": 1
+    },
+    "float32_output": {
+      "rosType": "std_msgs/msg/Float32",
+      "edgeType": 1
+    },
+    "float64_output": {
+      "rosType": "std_msgs/msg/Float64",
+      "edgeType": 1
+    },
+    "int32_output": {
+      "rosType": "std_msgs/msg/Int32",
+      "edgeType": 1
+    },
+    "int64_output": {
+      "rosType": "std_msgs/msg/Int64",
+      "edgeType": 1
+    },
+    "bool_output": {
+      "rosType": "std_msgs/msg/Bool",
+      "edgeType": 1
+    },
+    "float_array_output": {
+      "rosType": "std_msgs/msg/Float32MultiArray",
+      "edgeType": 1
+    },
+    "int_array_output": {
+      "rosType": "std_msgs/msg/Int32MultiArray",
+      "edgeType": 1
+    },
+    "image_output": {
+      "rosType": "sensor_msgs/msg/CompressedImage",
+      "edgeType": 1
+    },
+    "twist_output": {
+      "rosType": "geometry_msgs/msg/Twist",
+      "edgeType": 1
+    }
+  },
+  "executionContext": {
+    "type": 3,
+    "target": "",
+    "className": "RepublisherNode"
+  }
+}
